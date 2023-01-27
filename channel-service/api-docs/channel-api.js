@@ -58,7 +58,7 @@
  *                         type: string
  *                         description: The id of users who are in the channel
  *                         example: parkgain
- * /channel/{channelId}/post:
+ * /channel/post:
  *   post:
  *     summary: create the channel.
  *     parameters:
