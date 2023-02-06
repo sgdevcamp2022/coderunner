@@ -1,4 +1,4 @@
-const getChannelList = "select name from channel";
+const getChannelList = "select channel_id,name from channel";
 const getChannelInfo = (id) => {
   return `select * from channel where channel_id=${id}`;
 };
