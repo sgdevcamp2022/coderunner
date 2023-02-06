@@ -14,4 +14,4 @@ app.get("/", (req, res) => {
 });
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 app.use("/channel", require("./routes/channel-router"));
-app.listen(8085);
+app.listen(8083);
