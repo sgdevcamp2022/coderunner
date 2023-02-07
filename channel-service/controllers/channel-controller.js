@@ -15,8 +15,8 @@ module.exports.getChannelInfo = async (req, res) => {
   });
 };
 module.exports.createChannel = async (req, res) => {
-  const { name, outline, private } = req.body;
-  db.query(query.createChannel(name, outline, private), (error, rows) => {
+  const { name } = req.body;
+  db.query(query.createChannel(name), (error, rows) => {
     if (error) throw error;
     res.send(rows);
   });

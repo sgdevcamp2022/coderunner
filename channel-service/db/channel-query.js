@@ -2,8 +2,8 @@ const getChannelList = "select channel_id,name from channel";
 const getChannelInfo = (id) => {
   return `select * from channel where channel_id=${id}`;
 };
-const createChannel = (name, outline, private) => {
-  return `insert into channel (name,outline,private) values (${name},${outline},${private})`;
+const createChannel = (name) => {
+  return `insert into channel (name) values ("${name}")`;
 };
 const getUserList = (id) => {
   return `select user_id from user_channel where channel_id=${id}`;
