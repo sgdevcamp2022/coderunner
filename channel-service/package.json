@@ -1,8 +1,8 @@
 {
-  "name": "coderunner",
+  "name": "channel-service",
   "version": "1.0.0",
   "description": "스마일게이트 개발 캠프 2022 - 윈터 개발 캠프 2기 - codeRunner",
-  "main": "index.js",
+  "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "nodemon app.js"
