@@ -16,9 +16,14 @@ module.exports.getChannelInfo = async (req, res) => {
 };
 module.exports.createChannel = async (req, res) => {
   const { name } = req.body;
-  db.query(query.createChannel(name), (error, rows) => {
+  const { user_id } = req.body;
+  db.query(query.createChannel(name, null), (error, rows) => {
     if (error) throw error;
-    res.send(rows);
+    res.send("ok");
+    db.query(query.addChannelUser(user_id, null), (error, rows) => {
+      if (error) throw error;
+      res.send("ok");
+    });
   });
 };
 
