@@ -1,5 +1,6 @@
 package com.example.chatservice.service;
 
+//import com.example.chatservice.client.UserClient;
 import com.example.chatservice.model.dto.ChatPostDto;
 import com.example.chatservice.model.dto.ChatPostDto.ChatPostReq;
 import com.example.chatservice.model.dto.ChatRoomDto;
