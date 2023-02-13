@@ -3,6 +3,7 @@ package com.example.chatservice.controller;
 import com.example.chatservice.model.dto.ChatRoomDto.ChatRoomReq;
 import com.example.chatservice.model.dto.MessageDto;
 import com.example.chatservice.service.ChatService;
+import com.example.chatservice.service.redis.RedisCacheService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -16,7 +17,7 @@ import java.util.Map;
 public class ChatController {
 
     private final ChatService chatService;
-//    private final RedisCacheService redisCacheService;
+    private final RedisCacheService redisCacheService;
 
     @PostMapping("/room")
     public ResponseEntity<Map<String, Object>> creatChatRoom(@RequestBody ChatRoomReq request) {
