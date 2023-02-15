@@ -17,7 +17,7 @@ public class ChatPostDto {
     @NoArgsConstructor
     public static class ChatPostReq {
 
-        private int roomId;
+        private String roomName;
         private String nickname;
         private String content;
 
