@@ -20,10 +20,6 @@ module.exports.createChannel = async (req, res) => {
   db.query(query.createChannel(name, null), (error, rows) => {
     if (error) throw error;
     res.send("ok");
-    db.query(query.addChannelUser(user_id, null), (error, rows) => {
-      if (error) throw error;
-      res.send("ok");
-    });
   });
 };
 
@@ -41,5 +37,21 @@ module.exports.addUser = async (req, res) => {
   db.query(query.addUser(user_id, id), (error, rows) => {
     if (error) throw error;
     res.send(rows);
+  });
+};
+
+module.exports.getPosts = async (req, res) => {
+  const id = req.params.id;
+  db.query(query.getPosts(id), (error, rows) => {
+    if (error) throw error;
+    res.send(rows);
+  });
+};
+
+module.exports.writePosts = async (req, res) => {
+  const { id, user_id, content } = req.body;
+  db.query(query.writePosts(id, user_id, content), (error, rows) => {
+    if (error) throw error;
+    res.send("ok");
   });
 };
