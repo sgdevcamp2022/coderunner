@@ -1,6 +1,8 @@
 package com.example.chatservice.service;
 
-//import com.example.chatservice.client.UserClient;
+import com.example.chatservice.client.UserClient;
+import com.example.chatservice.exception.CustomException.NotFoundException;
+import com.example.chatservice.exception.ErrorCode;
 import com.example.chatservice.model.dto.ChatPostDto;
 import com.example.chatservice.model.dto.ChatPostDto.ChatPostReq;
 import com.example.chatservice.model.dto.ChatRoomDto;
@@ -21,7 +23,10 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 import static com.example.chatservice.util.Message.CHATROOM_FIND_SUCCESS_MESSAGE;
@@ -35,7 +40,7 @@ public class ChatService {
     private final ChatRoomRepository chatRoomRepository;
     private final UserChatRepository userChatRepository;
     private final ChatPostRepository chatPostRepository;
-//    private final UserClient userClient;
+    private final UserClient userClient;
 
     @Transactional
     public Map<String, Object> makeChatRoom(ChatRoomReq request) {
@@ -44,22 +49,11 @@ public class ChatService {
         chatRoomRepository.save(chatRoom);
         ChatRoomRes response = new ChatRoomRes(chatRoom.getId(), chatRoom.getName());
 
-        // >>>>>>>>>>>>>>>>>>>>>>>>>>>>
-        // UserRes user : userClient.getUsers(request.getNicknames())
-        // <<<<<<<<<<<<<<<<<<<<<<<<<<<<
+        String[] nicknames = request.getNicknames();
 
-        List<Optional<User>> users = request.getNicknames().stream()
-                .map(nn -> userRepository.findByNickname(nn))
-                .collect(Collectors.toList());
-
-        for (Optional<User> user : users) {
-            if(!user.isPresent()) new IllegalStateException("존재하지 않는 사용자입니다.");
-
-            // >>>>>>>>>>>>>>>>>>>>>>>>>>>>
-            // UserChat userChat = UserChatDto.toEntity(chatRoom, UserDto.toEntity(user));
-            // <<<<<<<<<<<<<<<<<<<<<<<<<<<<
-
-            UserChat userChat = UserChatDto.toEntity(chatRoom, user.get());
+        List<User> users = userClient.getUsers(nicknames[0], nicknames[1]);
+        for (User user : users) {
+            UserChat userChat = UserChatDto.toEntity(chatRoom, user);
             userChatRepository.save(userChat);
         }
 
@@ -76,7 +70,7 @@ public class ChatService {
     public List<MessageDto> findMessages(Integer roomId) {
 
         ChatRoom chatRoom = chatRoomRepository.findById(roomId)
-                .orElseThrow(() -> new IllegalStateException("채팅방이 존재하지 않습니다."));
+                .orElseThrow(() -> new NotFoundException(ErrorCode.CHAT_NOT_FOUND));
 
         List<ChatPost> postList = chatPostRepository.findByChatRoom(chatRoom);
         List<MessageDto> response = new ArrayList<>();
@@ -96,7 +90,7 @@ public class ChatService {
     public Map<String, Object> findChatRooms(String userId) {
 
         User user = userRepository.findById(userId)
-                .orElseThrow(() -> new IllegalStateException("유저가 존재하지 않습니다."));
+                .orElseThrow(() -> new NotFoundException(ErrorCode.USER_ID_NOT_FOUND));
 
         List<UserChat> roomList = userChatRepository.findByUser(user);
         List<ChatRoomRes> response = new ArrayList<>();
@@ -118,15 +112,16 @@ public class ChatService {
 
     @Transactional
     public void saveMessage(ChatPostReq request) {
-        User user = userRepository.findByNickname(request.getNickname())
-                .orElseThrow(() -> new IllegalStateException("존재하지 않는 사용자입니다."));
+
+        User user = userClient.getUser(request.getNickname());
 
         ChatRoom chatRoom = chatRoomRepository.findById(request.getRoomId())
-                .orElseThrow(() -> new IllegalStateException("존재하지 않는 채팅방입니다."));
+                .orElseThrow(() -> new NotFoundException(ErrorCode.CHAT_NOT_FOUND));
 
         ChatPost chatPost = ChatPostDto.toEntity(request, user, chatRoom);
 
         chatPostRepository.save(chatPost);
+
     }
 
 }

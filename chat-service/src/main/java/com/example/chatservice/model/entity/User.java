@@ -15,12 +15,10 @@ import javax.persistence.*;
 public class User {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "USER_ID", length = 45)
-    private String id;
+    private Integer id;
 
     @Column(nullable = false, length = 10)
     private String nickname;
-
-    @Column(nullable = false, length = 45)
-    private String password;
 }
