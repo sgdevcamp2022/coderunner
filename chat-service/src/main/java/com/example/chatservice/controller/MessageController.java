@@ -14,14 +14,11 @@ public class MessageController {
 
     private final RedisPublisher redisPublisher;
     private final ChannelTopic channelTopic;
-
-//    private final RedisCacheService redisCacheService;
     private final ChatService chatService;
 
     @MessageMapping("/chat/message")
     public void message(ChatPostReq message) {
         redisPublisher.publish(channelTopic, message);
-//        redisCacheService.addChat(message);
         chatService.saveMessage(message);
     }
 
