@@ -2,6 +2,7 @@ package com.example.chatservice.controller;
 
 import com.example.chatservice.model.dto.ChatPostDto.ChatPostReq;
 import com.example.chatservice.service.ChatService;
+import com.example.chatservice.service.redis.RedisCacheService;
 import com.example.chatservice.service.redis.RedisPublisher;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.redis.listener.ChannelTopic;
