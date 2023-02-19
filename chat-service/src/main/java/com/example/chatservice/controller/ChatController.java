@@ -16,17 +16,15 @@ import java.util.Map;
 public class ChatController {
 
     private final ChatService chatService;
-//    private final RedisCacheService redisCacheService;
 
     @PostMapping("/room")
-    public ResponseEntity<Map<String, Object>> creatChatRoom(@RequestBody ChatRoomReq request) {
+    public ResponseEntity<Map<String, Object>> createChatRoom(@RequestBody ChatRoomReq request) {
         return ResponseEntity.ok().body(chatService.makeChatRoom(request));
     }
 
     @GetMapping("/room/{roomId}")
     public List<MessageDto> getMessages(@PathVariable Integer roomId) {
         return chatService.findMessages(roomId);
-//        return redisCacheService.getMessagesFromCache(roomId);
     }
 
     @GetMapping("/rooms/{userId}")
