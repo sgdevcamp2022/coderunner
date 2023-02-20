@@ -12,10 +12,10 @@ const addUser = (user_id, id) => {
   return `insert into user_channel (user_id,channel_id) values (${user_id}, ${id}) `;
 };
 const writePosts = (id, user_id, content) => {
-  return `insert into channel_post (channel_id,user_id,content,created_at) values (${id},${user_id},${content},now())`;
+  return `insert into channel_post (channel_id,user_id,content,create_time) values (${id},${user_id},'${content}',now())`;
 };
 const getPosts = (id) => {
-  return `select user.nickname,channel_post.content,channel_post.created_at from channel_post left join user on channel_post.user_id=user.user_id where channel_post.channel_id=${id}`;
+  return `select user.nickname,channel_post.content,channel_post.create_time from channel_post left join user on channel_post.user_id=user.user_id where channel_post.channel_id=${id}`;
 };
 module.exports = {
   getChannelList,
