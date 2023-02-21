@@ -16,11 +16,13 @@ public class MessageController {
     private final RedisPublisher redisPublisher;
     private final ChannelTopic channelTopic;
     private final ChatService chatService;
+    private final RedisCacheService redisCacheService;
 
     @MessageMapping("/chat/message")
     public void message(ChatPostReq message) {
         redisPublisher.publish(channelTopic, message);
         chatService.saveMessage(message);
+        redisCacheService.addChat(message);
     }
 
 }

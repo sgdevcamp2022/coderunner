@@ -17,6 +17,7 @@ import java.util.Map;
 public class ChatController {
 
     private final ChatService chatService;
+    private final RedisCacheService redisCacheService;
 
     @PostMapping("/room")
     public ResponseEntity<Map<String, Object>> createChatRoom(@RequestBody ChatRoomReq request) {
@@ -25,7 +26,8 @@ public class ChatController {
 
     @GetMapping("/room/{roomId}")
     public List<MessageDto> getMessages(@PathVariable Integer roomId) {
-        return chatService.findMessages(roomId);
+//        return chatService.findMessages(roomId);
+        return redisCacheService.getMessagesFromCache(roomId);
     }
 
     @GetMapping("/rooms/{userId}")
