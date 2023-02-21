@@ -8,7 +8,6 @@ build/
 
 src/main/java/com/example/chatservice/repository/JdbcRepository.java
 src/main/java/com/example/chatservice/util/CacheWriteBackScheduling.java
-src/main/java/com/example/chatservice/service/redis/RedisCacheService.java
 *.ftl
 
 ### IntelliJ IDEA ###
