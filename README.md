@@ -106,3 +106,8 @@
 - `feature`: 기능을 개발하는 브랜치로 기능 개발을 완료하면 `develop`로 병합
 - `develop`: 평소에는 이 브랜치를 기반으로 개발을 진행하며 테스트를 완료한 후 master브랜치로 병합
 - `master`: 언제든지 배포가 가능한 상태만을 관리하는 브랜치
+
+## 📚 회고
+
+
+<a href="https://parkgain.tistory.com/52" style="text-decoration : none; font-size:20px; color : white;">프론트 회고</a>
